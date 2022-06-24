@@ -1,0 +1,30 @@
+version: '3.5'
+
+networks:
+  backend:
+    name: network
+
+services:
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus
+    hostname: nexus
+    restart: always
+    ports:
+      - 8081:8081
+      - 8082:8082
+    volumes:
+      - ./nexus/data:/nexus-data
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "10"
+    networks:
+      - backend
+
+
